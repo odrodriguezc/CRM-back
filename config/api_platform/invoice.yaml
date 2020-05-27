@@ -1,0 +1,5 @@
+App\Entity\Invoice:
+  attributes:
+    normalization_context:
+      groups:
+        - "invoice:read"

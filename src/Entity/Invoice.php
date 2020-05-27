@@ -2,8 +2,9 @@
 
 namespace App\Entity;
 
-use App\Repository\InvoiceRepository;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\InvoiceRepository;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=InvoiceRepository::class)
@@ -14,37 +15,44 @@ class Invoice
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"customer:read", "invoice:read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"customer:read", "invoice:read"})
      */
     private $amount;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups({"customer:read", "invoice:read"})
      */
     private $createdAt;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups({"customer:read", "invoice:read"})
      */
     private $UpdatedAt;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"customer:read", "invoice:read"})
      */
     private $chrono;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"customer:read", "invoice:read"})
      */
     private $title;
 
     /**
      * @ORM\ManyToOne(targetEntity=Customer::class, inversedBy="invoices")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"invoice:read"})
      */
     private $customer;
 

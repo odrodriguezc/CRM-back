@@ -7,10 +7,11 @@ use App\Repository\CustomerRepository;
 use Doctrine\Common\Collections\Collection;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=CustomerRepository::class)
- * @ApiResource
+ * 
  */
 class Customer
 {
@@ -18,36 +19,44 @@ class Customer
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"customer:read", "invoice:read"})
+     * 
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"customer:read", "invoice:read"})
      */
     private $fullName;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"customer:read", "invoice:read"})
      */
     private $company;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"customer:read", "invoice:read"})
      */
     private $email;
 
     /**
      * @ORM\OneToMany(targetEntity=Invoice::class, mappedBy="customer", orphanRemoval=true)
+     * @Groups({"customer:read"})
      */
     private $invoices;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups({"customer:read", "invoice:read"})
      */
     private $createdAt;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups({"customer:read", "invoice:read"})
      */
     private $UpdatedAt;
 
