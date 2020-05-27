@@ -26,6 +26,9 @@ class AppFixtures extends AbstractFixture
 
 
         $this->createMany(Invoice::class, 100, function (Invoice $invoice, $index) {
+            // $createdAt = $this->faker->dateTimeBetween('-6 months');
+            // $updatedAt = (clone $createdAt)->modify('+'. mt_rand(10, 20) . ' days');
+
             $invoice
                 ->setChrono($index + 1)
                 ->setAmount(mt_rand(200, 1500) * 100)
