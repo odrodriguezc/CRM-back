@@ -2,5 +2,6 @@ App\Entity\Customer:
   attributes:
     normalization_context:
       groups: "customer:read"
-  collectionOperations:
-    get: ~
+  # collectionOperations:
+  #   get: ~
+  #   post: ~

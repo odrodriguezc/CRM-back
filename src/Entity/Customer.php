@@ -2,16 +2,18 @@
 
 namespace App\Entity;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\CustomerRepository;
 use Doctrine\Common\Collections\Collection;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=CustomerRepository::class)
- * 
+ * @ORM\HasLifecycleCallbacks
  */
 class Customer
 {
@@ -27,18 +29,21 @@ class Customer
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"customer:read", "invoice:read"})
+     * @Assert\NotBlank(message="le nom du client est obligatoire")
      */
     private $fullName;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Groups({"customer:read", "invoice:read"})
+     * 
      */
     private $company;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"customer:read", "invoice:read"})
+     * @Assert\NotBlank(message="le email du client est obligatoire")
      */
     private $email;
 
@@ -63,6 +68,24 @@ class Customer
     public function __construct()
     {
         $this->invoices = new ArrayCollection();
+    }
+
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function prePersist()
+    {
+        $this->createdAt = new DateTime();
+        $this->UpdatedAt = new DateTime();
+    }
+
+    /**
+     * @ORM\PreUpdate
+     */
+    public function preUpdate()
+    {
+        $this->UpdatedAt = new DateTime();
     }
 
     public function getId(): ?int

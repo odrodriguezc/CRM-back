@@ -3,3 +3,14 @@ App\Entity\Invoice:
     normalization_context:
       groups:
         - "invoice:read"
+  itemOperations:
+    get: ~
+    put: ~
+    patch: ~
+    delete: ~
+    increment:
+      path: /invoices/{id}/increment
+      method: POST
+      controller: App\Controller\IncrementController
+      openapi_context:
+        summary: Incrementer le chrono de la facture

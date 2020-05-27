@@ -4,10 +4,14 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\InvoiceRepository;
+use DateTime;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * @ORM\Entity(repositoryClass=InvoiceRepository::class)
+ * @ORM\HasLifecycleCallbacks
  */
 class Invoice
 {
@@ -22,6 +26,8 @@ class Invoice
     /**
      * @ORM\Column(type="integer")
      * @Groups({"customer:read", "invoice:read"})
+     * @Assert\NotBlank(message="le montant de la facture est obligatoire")
+     * @Assert\PositiveOrZero
      */
     private $amount;
 
@@ -46,6 +52,8 @@ class Invoice
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"customer:read", "invoice:read"})
+     * @Assert\NotBlank(message="le titre de la facture est obligatoire")
+     * @Assert\Length(min=10, minMessage="le titre doit faire 10 caracteres au minimun")
      */
     private $title;
 
@@ -53,8 +61,29 @@ class Invoice
      * @ORM\ManyToOne(targetEntity=Customer::class, inversedBy="invoices")
      * @ORM\JoinColumn(nullable=false)
      * @Groups({"invoice:read"})
+     * @Assert\NotBlank(message="le client de la facture est obligatoire")
      */
     private $customer;
+
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function prePersist()
+    {
+        $this->createdAt = new DateTime();
+        $this->UpdatedAt = new DateTime();
+    }
+
+    /**
+     * @ORM\PreUpdate
+     */
+    public function preUpdate()
+    {
+        $this->UpdatedAt = new DateTime();
+    }
+
+
 
     public function getId(): ?int
     {
