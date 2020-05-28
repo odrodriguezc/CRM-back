@@ -88,6 +88,30 @@ class Customer
         $this->UpdatedAt = new DateTime();
     }
 
+    /**
+     * @Groups({"customer:read", "invoice:read"})
+     */
+    public function getInvoicesCount()
+    {
+        return count($this->invoices);
+    }
+
+    /**
+     * @Groups({"customer:read", "invoice:read"})
+     */
+    public function getTotalAmount()
+    {
+        // $amount = 0;
+        // foreach ($this->invoices as $invoice) {
+        //     $amount += $invoice->getAmount();
+        // }
+        // return $amount;
+
+        return  array_reduce($this->invoices->toArray(), function (int $total, Invoice $invoice) {
+            return $total + $invoice->getAmount();
+        }, 0);
+    }
+
     public function getId(): ?int
     {
         return $this->id;
