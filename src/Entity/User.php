@@ -46,6 +46,11 @@ class User implements UserInterface
      */
     private $customers;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $apiKey;
+
     public function __construct()
     {
         $this->customers = new ArrayCollection();
@@ -168,6 +173,18 @@ class User implements UserInterface
                 $customer->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getApiKey(): ?string
+    {
+        return $this->apiKey;
+    }
+
+    public function setApiKey(string $apiKey): self
+    {
+        $this->apiKey = $apiKey;
 
         return $this;
     }

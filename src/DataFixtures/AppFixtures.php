@@ -26,7 +26,8 @@ class AppFixtures extends AbstractFixture
         $this->createMany(User::class, 10, function (User $user, $u) {
             $user->setEmail("user$u@gmail.com")
                 ->setFullName($this->faker->name())
-                ->setPassword($this->encoder->encodePassword($user, "12345"));
+                ->setPassword($this->encoder->encodePassword($user, "12345"))
+                ->setApiKey("api-$u-key");
         });
 
         $this->createMany(Customer::class, 40, function (Customer $customer) {
