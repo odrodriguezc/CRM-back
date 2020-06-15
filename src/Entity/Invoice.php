@@ -71,8 +71,13 @@ class Invoice
      */
     public function prePersist()
     {
-        $this->createdAt = new DateTime();
-        $this->UpdatedAt = new DateTime();
+        if (!$this->createdAt) {
+            $this->createdAt = new DateTime();
+        }
+
+        if (!$this->UpdatedAt) {
+            $this->UpdatedAt = new DateTime();
+        }
     }
 
     /**

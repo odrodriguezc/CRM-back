@@ -18,6 +18,10 @@ class InvoiceChronoListener
 
     public function prePersist(Invoice $invoice)
     {
+        if ($invoice->getChrono()) {
+            return;
+        }
+
         $lastChrono = $this->repository->findlastChrono();
         $invoice->setChrono($lastChrono + 1);
     }
