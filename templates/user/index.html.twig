@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des utilisateurs
+{% endblock %}
+
+{% block body %}
+	<div class="container mt-5">
+
+		<h1 class="mb-3">Liste des utilisateurs</h1>
+		<table class="table table-hover">
+			<thead>
+				<tr class="table-dark">
+					<th>Id</th>
+					<th>FullName</th>
+					<th>Email</th>
+					<th>Role</th>
+					<th>Clients</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for u in users %}
+					<tr class="">
+						<td>
+							{{u.id}}
+						</td>
+						<td>
+							{{u.fullName}}
+						</td>
+						<td>{{u.email}}
+						</td>
+						<td>
+							{% for r in u.roles%}
+								<span>{{r}},
+								</span>
+							{% endfor %}
+						</td>
+						<td>
+							{{u.customers | length}}
+						</td>
+						<td>
+
+							<a href="{{ path('user_edit', {id: u.id}) }}" class="link">
+								<i class="fas fa-edit"></i>
+							</a>
+
+
+							<a href="{{ path('user_delete', {id: u.id}) }}" class="link">
+								<i class="fas fa-trash-alt"></i>
+							</a>
+						</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</tbody>
+	</table>
+</div>{% endblock %}

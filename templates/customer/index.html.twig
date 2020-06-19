@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste de Clients
+{% endblock %}
+
+{% block body %}
+	<div class="container mt-5">
+
+		<h1 class="mb-3">Liste de Clients</h1>
+		<table class="table table-hover">
+			<thead>
+				<tr class="table-dark">
+					<th>Id</th>
+					<th>FullName</th>
+					<th>Email</th>
+					<th>Company</th>
+					<th>Date</th>
+					<th>invoices</th>
+					<th>Utilisateur</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for c in customers %}
+					<tr class="">
+						<td>
+							{{c.id}}
+						</td>
+						<td>
+							{{c.fullName}}
+						</td>
+						<td>{{c.email}}
+						</td>
+						<td>
+							{{c.company}}</td>
+						<td>
+							{{c.createdAt | date("m/d/Y")}}
+						</td>
+						<td>
+							{{c.invoices | length}}
+						</td>
+
+						<td>{{c.user.fullName}}
+						</td>
+						<td>
+
+							<a href="{{ path('customer_index', {id: c.id}) }}" class="link">
+								<i class="fas fa-edit"></i>
+							</a>
+
+
+							<a href="{{ path('customer_delete', {id: c.id}) }}" class="link">
+								<i class="fas fa-trash-alt"></i>
+							</a>
+						</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</tbody>
+	</table>
+</div>{% endblock %}

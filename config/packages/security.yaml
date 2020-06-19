@@ -42,6 +42,12 @@ security:
           - lexik_jwt_authentication.jwt_token_authenticator
     main:
       anonymous: lazy
+      provider: app_user_provider
+      form_login:
+        login_path: admin_security_login
+        check_path: admin_security_login
+      logout:
+        path: admin_security_logout
       # guard:
       #     authenticators:
       #         - App\Security\ApiKeyAuthenticator
@@ -63,5 +69,7 @@ security:
     - { path: ^/api/users$, roles: IS_AUTHENTICATED_ANONYMOUSLY, methods: POST }
     - { path: ^/api$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
     - { path: ^/api, roles: ROLE_USER }
+    - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+    - { path: ^/, roles: ROLE_ADMIN }
     # - { path: ^/admin, roles: ROLE_ADMIN }
     # - { path: ^/profile, roles: ROLE_USER }

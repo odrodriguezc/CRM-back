@@ -23,14 +23,27 @@ class AppFixtures extends AbstractFixture
     public function loadData(ObjectManager $manager)
     {
 
-        $this->createMany(User::class, 10, function (User $user, $u) {
+        $this->createMany(User::class, 5, function (User $user, $u) {
             $user->setEmail("user$u@gmail.com")
                 ->setFullName($this->faker->name())
                 ->setPassword("12345")
                 ->setApiKey("api-$u-key");
         });
 
-        $this->createMany(Customer::class, 40, function (Customer $customer) {
+        //ADMIN
+        $admin = new User();
+        $admin->setEmail('admin@gmail.com')
+            ->setFullName('El Patron')
+            ->setApiKey('api-admin')
+            ->setPassword('12345')
+            ->setRoles(['ROLE_ADMIN']);
+
+        $manager->persist($admin);
+        $manager->flush();
+
+
+
+        $this->createMany(Customer::class, 200, function (Customer $customer) {
             $customer
                 ->setFullName($this->faker->name())
                 ->setEmail($this->faker->safeEmail)
@@ -44,7 +57,7 @@ class AppFixtures extends AbstractFixture
         });
 
 
-        $this->createMany(Invoice::class, 100, function (Invoice $invoice, $index) {
+        $this->createMany(Invoice::class, 400, function (Invoice $invoice, $index) {
             // $createdAt = $this->faker->dateTimeBetween('-6 months');
             // $updatedAt = (clone $createdAt)->modify('+'. mt_rand(10, 20) . ' days');
 
